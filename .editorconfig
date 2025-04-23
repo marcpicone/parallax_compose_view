@@ -1,0 +1,13 @@
+[*.{kt,kts}]
+indent_size=4
+
+# https://github.com/android/kotlin-guides/issues/37
+# https://github.com/shyiko/ktlint/issues/120
+# https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+# Default Android Studio seems to be 8 and should be 4
+continuation_indent_size=4
+
+insert_final_newline=true
+
+# https://github.com/pinterest/ktlint#editorconfig
+ktlint_disabled_rules=package-name
