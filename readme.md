@@ -1,5 +1,9 @@
 # Feature Parallax View Repository
 
+## Demo
+
+![Demo ParallaxComposeView](https://raw.githubusercontent.com/marcpicone/parallax_compose_view/dev/docs/images/parallax_sample.gif)
+
 This repository contains two modules:
 
 1. **feature_parallax_view** –
@@ -27,7 +31,3 @@ This repository contains two modules:
 ## License
 
 The **feature_parallax_view** library and **sample_app** are both released under the MIT License © Marc Picone.
-
-## Demo
-
-![Demo ParallaxComposeView](https://marcpicone.github.io/parallax_compose_view/images/parallax_sample.gif)
