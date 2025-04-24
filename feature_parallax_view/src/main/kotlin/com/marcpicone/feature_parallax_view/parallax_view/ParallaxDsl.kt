@@ -17,7 +17,7 @@ typealias ParallaxLayer = @Composable Modifier.() -> Unit
  *
  */
 @ParallaxDsl
-class ParallaxScope internal constructor() {
+class ParallaxScope {
     internal val layers = mutableListOf<ParallaxLayer>()
 
     /**
