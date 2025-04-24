@@ -1,6 +1,6 @@
-# Destin Encre - Changelog
+# Feature Parallax View - Changelog
 
-**version 1.0.0**
+**version 1.00.00**
 Done by: marc.picone.13700@gmail.com
 
 - Initial release :

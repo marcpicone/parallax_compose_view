@@ -9,7 +9,7 @@ android {
     compileSdk = 35
 
     group = "com.marcpicone.feature_parallax_view"
-    version = "1.0.0"
+    version = "1.00.00"
 
     defaultConfig {
         minSdk = 24
