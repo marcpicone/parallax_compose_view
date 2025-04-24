@@ -11,20 +11,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.zIndex
 import kotlinx.coroutines.launch
 
 /**
- * Extension for Modifier to install a drag gesture detector that updates the provided [ParallaxState].
+ * Installs a drag gesture detector on this [Modifier], forwarding drag events to the given [ParallaxState].
  *
- * This gesture must be applied only once on a parent container to avoid multiple simultaneous listeners.
+ * Use once at the highest container that should respond to pointer drags. This detector will
+ * capture pointer input and invoke [ParallaxState.onDrag] and [ParallaxState.onRelease] accordingly.
  *
- * @param state The [ParallaxState] whose onDrag and onRelease will be called during gesture.
- * @return A [Modifier] that intercepts pointer input and forwards drag events to [state].
+ * **Example:**
+ * ```kotlin
+ * Box(
+ *   Modifier
+ *     .fillMaxSize()
+ *     .parallaxGesture(state)
+ * ) {
+ *   // child layers with .parallaxLayer()
+ * }
+ * ```
+ *
+ * @receiver The [Modifier] on which to install the gesture detector.
+ * @param state The [ParallaxState] that receives drag deltas and triggers spring-back.
+ * @return A [Modifier] that intercepts pointer input and updates [state].
  */
 fun Modifier.parallaxGesture(
     state: ParallaxState
@@ -32,37 +42,52 @@ fun Modifier.parallaxGesture(
     val coroutineScope = rememberCoroutineScope()
     pointerInput(state) {
         detectDragGestures(
-            onDrag = { _, dragAmount -> coroutineScope.launch { state.onDrag(dragAmount) } },
-            onDragEnd = { coroutineScope.launch { state.onRelease() } }
+            onDrag = { _, dragAmount ->
+                coroutineScope.launch { state.onDrag(dragAmount) }
+            },
+            onDragEnd = {
+                coroutineScope.launch { state.onRelease() }
+            }
         )
     }
 }
 
 /**
- * Extension for Modifier to apply a parallax transform at a given depth based on [ParallaxState].
+ * Applies a parallax transform to this [Modifier] based on the provided [ParallaxState] and depth factor.
  *
- * @param state The [ParallaxState] supplying the current drag offset and configuration.
- * @param zFactor Normalized depth factor: 0f = background (the least movement), 1f = foreground (full movement).
- *                Values outside 0f…1f will be coerced internally.
- * @return A [Modifier] that applies translation, rotation and z-index based on [state] and [zFactor].
+ * Attach child layers inside a gesture-capturing container for this effect to work correctly.
+ * Layers closer to the front should use higher [zFactor] values.
+ *
+ * **Example:**
+ * ```kotlin
+ * Box(
+ *   Modifier
+ *     .fillMaxSize()
+ *     .parallaxGesture(state)
+ * ) {
+ *   Box(Modifier.parallaxLayer(state, zFactor = 0f)) // background
+ *   Box(Modifier.parallaxLayer(state, zFactor = 0.5f)) // middle
+ *   Box(Modifier.parallaxLayer(state, zFactor = 1f)) // foreground
+ * }
+ * ```
+ *
+ * @receiver The [Modifier] to which the parallax transform is applied.
+ * @param state The [ParallaxState] supplying current offset and configuration.
+ * @param zFactor Normalized depth (0f = back, 1f = front). Values outside this range will throw.
+ * @return A [Modifier] that applies translation, rotation, cameraDistance, and zIndex transforms.
+ * @throws IllegalArgumentException if [zFactor] is not in the range 0f…1f.
  */
 fun Modifier.parallaxLayer(
     state: ParallaxState,
     @FloatRange(from = 0.0, to = 1.0)
     zFactor: Float
 ): Modifier = composed {
-    check(zFactor in 0f..1f) { "zFactor should be in 0f..1f" }
-    val density = LocalDensity.current.density
-    graphicsLayer {
-        val offset = state.offset.value
-        val normalizedX = (offset.x / state.maxDragXPx).coerceIn(-1f, 1f)
-        val normalizedY = (offset.y / state.maxDragYPx).coerceIn(-1f, 1f)
-        translationX = offset.x * zFactor
-        translationY = offset.y * zFactor
-        rotationY = normalizedX * state.maxRotationAngleDegree
-        rotationX = -normalizedY * state.maxRotationAngleDegree
-        cameraDistance = 8 * density
-    }.zIndex(zFactor)
+    require(zFactor in 0f..1f) { "zFactor should be in 0f..1f" }
+
+    this.parallaxLayerImpl(
+        state = state,
+        zFactor = zFactor
+    )
 }
 
 @Preview(
@@ -70,7 +95,7 @@ fun Modifier.parallaxLayer(
     backgroundColor = 0xFF101010
 )
 @Composable
-private fun ParallaxViewPreview() {
+private fun ParallaxModifierPreview() {
     val state: ParallaxState = rememberParallaxState()
     Box(
         modifier = Modifier
