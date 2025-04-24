@@ -4,11 +4,11 @@ This repository contains two modules:
 
 1. **feature_parallax_view** –
     - A Jetpack Compose library offering an easy-to-use parallax effect via both DSL and Modifier APIs.
-    - Full documentation and setup instructions in [feature_parallax_view README](https://github.com/marcpicone/parallax_compose_view/blob/feature_parallax_view/readme.md).
+    - Full documentation and setup instructions in [feature_parallax_view README](https://github.com/marcpicone/parallax_compose_view/blob/dev/feature_parallax_view/readme.md).
 
 2. **sample_app** –
     - A minimal Compose application demonstrating the library in action.
-    - Sample usage and quickstart guide in [feature_parallax_view_sample_app README](https://github.com/marcpicone/parallax_compose_view/feature_parallax_view_sample_app/readme.md).
+    - Sample usage and quickstart guide in [feature_parallax_view_sample_app README](https://github.com/marcpicone/parallax_compose_view/blob/dev/feature_parallax_view_sample_app/readme.md).
 
 ---
 
