@@ -79,7 +79,7 @@ private fun ColumnScope.ParallaxModifierExample(parallaxResources: List<Int>) {
             color = MaterialTheme.colorScheme.onBackground
         )
         parallaxResources.forEachIndexed { index, resourceId ->
-            val zFactor = ((index + 1) / parallaxResources.size.toFloat()).coerceAtMost(0.8f)
+            val zFactor = ((index + 1) / parallaxResources.size.toFloat()).coerceAtMost(0.8f) // to be able to have text on top z position
             Image(
                 painter = painterResource(id = resourceId),
                 contentDescription = null,

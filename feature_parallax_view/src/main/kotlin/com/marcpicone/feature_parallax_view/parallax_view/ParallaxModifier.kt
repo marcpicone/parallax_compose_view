@@ -13,6 +13,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
+import com.marcpicone.feature_parallax_view.parallax_view.internal.parallaxLayerImpl
 import kotlinx.coroutines.launch
 
 /**

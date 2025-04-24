@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
  * @param maxDragXPx              Maximum horizontal drag distance **in pixels** (converted from Dp).
  * @param maxDragYPx              Maximum vertical drag distance **in pixels** (converted from Dp).
  * @param maxRotationAngleDegree  Maximum rotation angle applied to each layer, in degrees.
- * @param smoothingX              Horizontal smoothing factor (0f…1f),0 means no smoothing (raw drag), closer to 1f means more smoothing, 1f means axis rotation locked.
- * @param smoothingY              Vertical smoothing factor (0f…1f),0 means no smoothing (raw drag), closer to 1f means more smoothing, 1f means axis rotation locked.
+ * @param smoothingX              Horizontal smoothing factor (0f…1f), 0f means no smoothing (raw drag), closer to 1f means more smoothing, 1f means axis rotation locked.
+ * @param smoothingY              Vertical smoothing factor (0f…1f), 0f means no smoothing (raw drag), closer to 1f means more smoothing, 1f means axis rotation locked.
  * @param releaseAnimationSpec    [AnimationSpec]<Offset> used for animation when drag is released.
  *
  * @property offset               Current drag offset as a [State]<Offset>, updated during gestures.
@@ -47,8 +47,8 @@ class ParallaxState internal constructor(
 ) {
     init {
         require(maxRotationAngleDegree in 0f..360f) { "Rotation angle must be between 0 and 360" }
-        require(smoothingX in 0f..1f) { "Smoothing factor must be between 0 and 1" }
-        require(smoothingY in 0f..1f) { "Smoothing factor must be between 0 and 1" }
+        require(smoothingX in 0f..1f) { "Smoothing factor must be between 0f and 1f" }
+        require(smoothingY in 0f..1f) { "Smoothing factor must be between 0f and 1f" }
     }
     val offset: State<Offset> get() = offsetAnimatable.asState()
 
@@ -106,8 +106,8 @@ class ParallaxState internal constructor(
  * @param maxDragXDp             Maximum horizontal drag distance, in DP.
  * @param maxDragYDp             Maximum vertical drag distance, in DP.
  * @param maxRotationAngleDegree Max rotation on X/Y axes, in degrees.
- * @param smoothingX              Horizontal smoothing factor (0f…1f), 0 means no smoothing (raw drag), closer to 1f means more smoothing, 1f means axis rotation locked.
- * @param smoothingY              Vertical smoothing factor (0f…1f), 0 means no smoothing (raw drag), closer to 1f means more smoothing, 1f means axis rotation locked.
+ * @param smoothingX              Horizontal smoothing factor (0f…1f), 0f means no smoothing (raw drag), closer to 1f means more smoothing, 1f means axis rotation locked.
+ * @param smoothingY              Vertical smoothing factor (0f…1f), 0f means no smoothing (raw drag), closer to 1f means more smoothing, 1f means axis rotation locked.
  * @param releaseAnimationSpec   `AnimationSpec<Offset>` for the spring-back behavior.
  * @return The remembered [ParallaxState] instance, cancelled when the composable leaves the composition.
  * @sample com.marcpicone.feature_parallax_view.parallax_view.ParallaxViewPreview

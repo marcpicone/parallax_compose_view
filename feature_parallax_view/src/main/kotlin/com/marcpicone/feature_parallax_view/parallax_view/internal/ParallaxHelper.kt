@@ -1,10 +1,11 @@
-package com.marcpicone.feature_parallax_view.parallax_view
+package com.marcpicone.feature_parallax_view.parallax_view.internal
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.zIndex
+import com.marcpicone.feature_parallax_view.parallax_view.ParallaxState
 
 /**
  * Applies the parallax transforms—translation, rotation and cameraDistance—plus zIndex.
